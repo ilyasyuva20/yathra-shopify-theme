@@ -1,0 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "editorial": {
+      "type": "yathra-editorial",
+      "settings": {
+        "h1_img_a": "shopify://shop_images/yathra-3.jpg",
+        "h1_img_b": "shopify://shop_images/yathra-7.webp",
+        "h1_link": "shopify://collections/women",
+        "h2_img_a": "shopify://shop_images/yathra-1.jpg",
+        "h2_img_b": "shopify://shop_images/yathra-8.jpg",
+        "h2_link": "shopify://collections/girls",
+        "h3_img_a": "shopify://shop_images/yathra-9.jpg",
+        "h3_img_b": "shopify://shop_images/yathra-2.jpg",
+        "h3_link": "shopify://collections/men",
+        "c1_image": "shopify://shop_images/yathra-6.webp",
+        "c1_link": "shopify://collections/women",
+        "c2_image": "shopify://shop_images/yathra-9.jpg",
+        "c2_link": "shopify://collections/men",
+        "c3_image": "shopify://shop_images/yathra-1.jpg",
+        "c3_link": "shopify://collections/girls",
+        "c4_image": "shopify://shop_images/yathra-7.webp",
+        "c4_link": "shopify://collections/women",
+        "c5_image": "shopify://shop_images/yathra-4.webp",
+        "c5_link": "shopify://collections/frontpage",
+        "rail1_collection": "frontpage",
+        "p1_image": "shopify://shop_images/yathra-2.jpg",
+        "p1_link": "shopify://collections/women",
+        "p2_image": "shopify://shop_images/yathra-8.jpg",
+        "p2_link": "shopify://collections/girls",
+        "rail2_collection": "women",
+        "ig1": "shopify://shop_images/yathra-1.jpg",
+        "ig2": "shopify://shop_images/yathra-3.jpg",
+        "ig3": "shopify://shop_images/yathra-5.jpg",
+        "ig4": "shopify://shop_images/yathra-6.webp",
+        "ig5": "shopify://shop_images/yathra-8.jpg",
+        "ig6": "shopify://shop_images/yathra-9.jpg"
+      }
+    }
+  },
+  "order": ["editorial"]
+}

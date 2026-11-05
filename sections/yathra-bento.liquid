@@ -1,0 +1,316 @@
+{%- comment -%} Yathra · Family Bento homepage section {%- endcomment -%}
+{{ 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Baloo+Chettan+2:wght@700&display=swap' | stylesheet_tag }}
+{%- assign s = section.settings -%}
+<style>
+  #yb-{{ section.id }}{--yb-blue:{{ s.blue }};--yb-ink:#0A1B2E;--yb-red:#D7262B;--yb-yellow:#FFD84D;--yb-mint:#C9F0D8;--yb-bg:#F4F7FB;--yb-muted:#4A5B6B;
+    font-family:'Outfit',system-ui,sans-serif;color:var(--yb-ink);background:var(--yb-bg);padding:16px 0 8px}
+  #yb-{{ section.id }} *{box-sizing:border-box}
+  #yb-{{ section.id }} a{color:inherit;text-decoration:none}
+  .yb-wrap{max-width:1360px;margin:0 auto;padding:0 24px}
+  .yb-bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .yb-hero{grid-column:span 3;background:var(--yb-blue);border-radius:32px;padding:44px;min-height:460px;display:flex;gap:24px;position:relative;overflow:hidden}
+  .yb-hero__text{flex:1 1 55%;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:1}
+  .yb-hero__img{flex:1 1 45%;border-radius:24px;overflow:hidden;position:relative;z-index:1;min-height:320px}
+  .yb-hero__img img,.yb-hero__img svg,.yb-media img,.yb-media svg{width:100%;height:100%;object-fit:cover;display:block}
+  .yb-pill{align-self:flex-start;background:var(--yb-ink);color:#fff;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .yb-h1{margin:0;font-size:clamp(44px,6vw,80px);line-height:.95;font-weight:900;letter-spacing:-.03em}
+  .yb-h1 span{color:#fff}
+  .yb-ml{margin:16px 0 0;font-family:'Baloo Chettan 2',sans-serif;font-size:26px}
+  .yb-btn{display:inline-block;margin-top:22px;background:var(--yb-ink);color:#fff !important;padding:16px 28px;border-radius:999px;font-weight:700;font-size:16px}
+  .yb-swoosh{position:absolute;right:-60px;bottom:-80px;pointer-events:none}
+  .yb-festive{background:var(--yb-yellow);border-radius:32px;padding:28px;display:flex;flex-direction:column;gap:16px;min-height:460px}
+  .yb-festive .yb-media{flex:1;border-radius:22px;overflow:hidden;background:#FFF3C2;min-height:220px}
+  .yb-eyebrow{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .yb-big{font-size:32px;font-weight:800;line-height:1.05}
+  .yb-cat{border-radius:32px;padding:20px 20px 20px 24px;min-height:220px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;transition:transform .2s}
+  .yb-cat:hover{transform:translateY(-4px)}
+  .yb-cat .yb-media{width:130px;height:176px;border-radius:20px;overflow:hidden;flex:0 0 auto}
+  .yb-ticker{background:var(--yb-ink);color:#fff;padding:18px 24px;margin-top:32px;display:flex;flex-wrap:wrap;justify-content:center;gap:24px;font-size:20px;font-weight:700}
+  .yb-sec{padding:64px 0 16px}
+  .yb-h2{margin:0;font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-.02em}
+  .yb-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+  .yb-budget{margin-top:24px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .yb-budget a{background:#fff;border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:4px}
+  .yb-budget small{font-size:14px;color:var(--yb-muted)}
+  .yb-budget b{font-size:40px;font-weight:900}
+  .yb-products{margin-top:28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .yb-card{background:#fff;border-radius:28px;padding:12px;display:flex;flex-direction:column;gap:10px}
+  .yb-card .yb-media{aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#EAF3FB}
+  .yb-card__body{padding:4px 8px 8px;display:flex;flex-direction:column;gap:4px}
+  .yb-card__title{font-size:18px;font-weight:700}
+  .yb-card__foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+  .yb-price{font-size:20px;font-weight:800}
+  .yb-plus{width:44px;height:44px;border-radius:50%;background:var(--yb-ink);display:grid;place-items:center}
+  .yb-steps{background:#fff;border-radius:36px;padding:48px;display:flex;flex-wrap:wrap;gap:40px;align-items:center}
+  .yb-steps__grid{flex:2 1 520px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .yb-step{background:var(--yb-bg);border-radius:24px;padding:24px}
+  .yb-step span{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;font-weight:800}
+  .yb-step h3{margin:16px 0 4px;font-size:20px}
+  .yb-step p{margin:0;font-size:14px;color:var(--yb-muted)}
+  .yb-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:16px 0 56px}
+  .yb-box{border-radius:32px;padding:36px;display:flex;flex-direction:column;gap:14px}
+  .yb-insta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .yb-insta div{aspect-ratio:1;border-radius:14px;overflow:hidden;background:#2A4664}
+  .yb-insta img{width:100%;height:100%;object-fit:cover;display:block}
+  .yb-chip{padding:14px 20px;border-radius:999px;font-weight:700;display:inline-block}
+  @media (max-width:990px){
+    .yb-bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .yb-hero{grid-column:span 2;flex-direction:column;padding:32px}
+    .yb-festive{grid-column:span 2;min-height:360px}
+    .yb-budget,.yb-products{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .yb-trio{grid-template-columns:1fr}
+    .yb-steps{padding:32px}
+  }
+  @media (max-width:600px){
+    .yb-bento{grid-template-columns:1fr}
+    .yb-hero,.yb-festive{grid-column:span 1}
+    .yb-steps__grid{grid-template-columns:1fr}
+    .yb-cat .yb-media{width:110px;height:150px}
+    .yb-budget b{font-size:30px}
+  }
+</style>
+
+<div id="yb-{{ section.id }}">
+  <div class="yb-wrap">
+    <div class="yb-bento">
+      <div class="yb-hero">
+        <svg class="yb-swoosh" aria-hidden="true" width="420" height="420" viewBox="0 0 420 420" fill="none"><path d="M60 380 C 200 300, 300 180, 330 40" stroke="#D7262B" stroke-width="22" stroke-linecap="round"/><circle cx="300" cy="260" r="130" stroke="#ffffff" stroke-width="22" opacity="0.45"/></svg>
+        <div class="yb-hero__text">
+          <span class="yb-pill">{{ s.hero_eyebrow }}</span>
+          <div>
+            <h1 class="yb-h1">{{ s.hero_heading }}<br><span>{{ s.hero_highlight }}</span></h1>
+            {%- if s.hero_malayalam != blank -%}<p class="yb-ml">{{ s.hero_malayalam }}</p>{%- endif -%}
+            <a class="yb-btn" href="{{ s.hero_link | default: routes.all_products_collection_url }}">{{ s.hero_button }}</a>
+          </div>
+        </div>
+        {%- if s.hero_image != blank -%}
+          <div class="yb-hero__img">{{ s.hero_image | image_url: width: 1200 | image_tag: loading: 'eager', alt: s.hero_heading }}</div>
+        {%- endif -%}
+      </div>
+
+      <a class="yb-festive" href="{{ s.festive_link | default: routes.all_products_collection_url }}">
+        <span class="yb-eyebrow">{{ s.festive_eyebrow }}</span>
+        <span class="yb-media">
+          {%- if s.festive_image != blank -%}{{ s.festive_image | image_url: width: 800 | image_tag: loading: 'lazy' }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}
+        </span>
+        <span class="yb-big">{{ s.festive_title }} →</span>
+      </a>
+
+      {%- for i in (1..4) -%}
+        {%- liquid
+          case i
+            when 1
+              assign c_title = s.cat1_title
+              assign c_img = s.cat1_image
+              assign c_link = s.cat1_link
+              assign c_bg = '#ffffff'
+              assign c_fg = '#0A1B2E'
+              assign c_ph = '#D5EBFA'
+            when 2
+              assign c_title = s.cat2_title
+              assign c_img = s.cat2_image
+              assign c_link = s.cat2_link
+              assign c_bg = '#D7262B'
+              assign c_fg = '#ffffff'
+              assign c_ph = '#F4A3A5'
+            when 3
+              assign c_title = s.cat3_title
+              assign c_img = s.cat3_image
+              assign c_link = s.cat3_link
+              assign c_bg = '#0A1B2E'
+              assign c_fg = '#ffffff'
+              assign c_ph = '#2A4664'
+            when 4
+              assign c_title = s.cat4_title
+              assign c_img = s.cat4_image
+              assign c_link = s.cat4_link
+              assign c_bg = '#C9F0D8'
+              assign c_fg = '#0A1B2E'
+              assign c_ph = '#ffffff'
+          endcase
+        -%}
+        <a class="yb-cat" href="{{ c_link | default: routes.all_products_collection_url }}" style="background:{{ c_bg }};color:{{ c_fg }}">
+          <span class="yb-big">{{ c_title }}</span>
+          <span class="yb-media" style="background:{{ c_ph }}">
+            {%- if c_img != blank -%}{{ c_img | image_url: width: 400 | image_tag: loading: 'lazy', alt: c_title }}{%- else -%}{{ 'apparel-' | append: i | placeholder_svg_tag }}{%- endif -%}
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="yb-ticker">
+    {%- assign words = s.ticker | split: ',' -%}
+    {%- assign dots = '#5DB4EC,#FFD84D,#D7262B' | split: ',' -%}
+    {%- for w in words -%}
+      <span>{{ w | strip }}</span>{%- unless forloop.last -%}{%- assign di = forloop.index0 | modulo: 3 -%}<span style="color:{{ dots[di] }}">✦</span>{%- endunless -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="yb-wrap">
+    <div class="yb-sec">
+      <h2 class="yb-h2">{{ s.budget_heading }}</h2>
+      <div class="yb-budget">
+        <a href="{{ s.budget1_link | default: routes.all_products_collection_url }}"><small>Under</small><b>₹{{ s.budget1 }}</b></a>
+        <a href="{{ s.budget2_link | default: routes.all_products_collection_url }}"><small>Under</small><b>₹{{ s.budget2 }}</b></a>
+        <a href="{{ s.budget3_link | default: routes.all_products_collection_url }}"><small>Under</small><b>₹{{ s.budget3 }}</b></a>
+        <a href="{{ s.combo_link | default: routes.all_products_collection_url }}" style="background:var(--yb-blue)"><small style="color:#0A1B2E">Family combos</small><b>Save more</b></a>
+      </div>
+    </div>
+
+    <div class="yb-sec">
+      <div class="yb-row">
+        <h2 class="yb-h2">{{ s.trending_heading }}</h2>
+        <a href="{{ s.trending_collection.url | default: routes.all_products_collection_url }}" style="font-weight:700">View all →</a>
+      </div>
+      <div class="yb-products">
+        {%- assign col = s.trending_collection -%}
+        {%- if col != blank and col.products_count > 0 -%}
+          {%- for product in col.products limit: 8 -%}
+            <a class="yb-card" href="{{ product.url }}">
+              <span class="yb-media">
+                {%- if product.featured_image -%}{{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
+              </span>
+              <span class="yb-card__body">
+                <span style="font-size:13px;font-weight:600;color:#0B6FB3">{{ product.type | default: product.vendor }}</span>
+                <span class="yb-card__title">{{ product.title }}</span>
+                <span class="yb-card__foot">
+                  <span class="yb-price">{%- if product.price > 0 -%}{{ product.price | money_without_trailing_zeros }}{%- else -%}Price on request{%- endif -%}</span>
+                  <span class="yb-plus" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></span>
+                </span>
+              </span>
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign ph_names = 'Floral A-line kurti,Oxford casual shirt,Denim dungaree set,Cotton baby romper' | split: ',' -%}
+          {%- for n in ph_names -%}
+            <div class="yb-card">
+              <span class="yb-media">{{ 'product-' | append: forloop.index | placeholder_svg_tag }}</span>
+              <span class="yb-card__body">
+                <span class="yb-card__title">{{ n }}</span>
+                <span class="yb-card__foot"><span class="yb-price">₹ —</span><span class="yb-plus" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></span></span>
+              </span>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="yb-sec">
+      <div class="yb-steps">
+        <div style="flex:1 1 340px">
+          <h2 class="yb-h2" style="line-height:1.05">{{ s.steps_heading }}</h2>
+          <p style="margin:14px 0 0;font-size:17px;line-height:1.6;color:var(--yb-muted)">{{ s.steps_text }}</p>
+        </div>
+        <div class="yb-steps__grid">
+          <div class="yb-step"><span style="background:var(--yb-blue)">1</span><h3>Pick a colour</h3><p>Kasavu, pastel, festive red…</p></div>
+          <div class="yb-step"><span style="background:var(--yb-yellow)">2</span><h3>Add each member</h3><p>Sizes for dad to baby</p></div>
+          <div class="yb-step"><span style="background:var(--yb-red);color:#fff">3</span><h3>Checkout once</h3><p>COD, UPI or store pickup</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="yb-trio">
+      <div class="yb-box" style="background:var(--yb-ink);color:#fff">
+        <span class="yb-eyebrow" style="color:var(--yb-blue)">#YathraFamily</span>
+        <span class="yb-big" style="font-size:34px">Tag us in your family photos</span>
+        <div class="yb-insta">
+          {%- for k in (1..3) -%}
+            {%- liquid
+              case k
+                when 1
+                  assign im = s.insta1
+                when 2
+                  assign im = s.insta2
+                when 3
+                  assign im = s.insta3
+              endcase
+            -%}
+            <div>{%- if im != blank -%}{{ im | image_url: width: 300 | image_tag: loading: 'lazy' }}{%- endif -%}</div>
+          {%- endfor -%}
+        </div>
+        <a href="{{ s.instagram_url }}" style="color:var(--yb-yellow);font-weight:700">@{{ s.instagram_handle }} →</a>
+      </div>
+      <div class="yb-box" style="background:var(--yb-yellow)">
+        <span class="yb-eyebrow">Customers say</span>
+        <span class="yb-big" style="font-size:30px;line-height:1.2">“{{ s.review }}”</span>
+        <span style="font-size:14px">{{ s.review_source }}</span>
+      </div>
+      <div class="yb-box" style="background:#fff">
+        <span class="yb-eyebrow" style="color:var(--yb-red)">Visit the store</span>
+        <span class="yb-big" style="font-size:26px;line-height:1.15">{{ s.store_name }}</span>
+        <span style="font-size:15px;line-height:1.6;color:var(--yb-muted)">{{ s.store_address }}</span>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:auto">
+          <a class="yb-chip" href="tel:{{ s.phone | remove: ' ' }}" style="background:var(--yb-ink);color:#fff">Call {{ s.phone }}</a>
+          <a class="yb-chip" href="{{ s.map_link }}" style="background:var(--yb-blue)">Directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Yathra Family Bento",
+  "tag": "section",
+  "class": "yathra-bento",
+  "settings": [
+    { "type": "color", "id": "blue", "label": "Brand blue", "default": "#5DB4EC" },
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Label", "default": "The Complete Family Clothing Store" },
+    { "type": "text", "id": "hero_heading", "label": "Heading", "default": "Dad. Mom. Kids. Baby." },
+    { "type": "text", "id": "hero_highlight", "label": "Heading highlight (white)", "default": "Sorted." },
+    { "type": "text", "id": "hero_malayalam", "label": "Malayalam tagline", "default": "നമ്മുടെ സ്വന്തം തുണിക്കട" },
+    { "type": "text", "id": "hero_button", "label": "Button label", "default": "Start shopping →" },
+    { "type": "url", "id": "hero_link", "label": "Button link" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image (family photo)" },
+    { "type": "header", "content": "Festive tile" },
+    { "type": "text", "id": "festive_eyebrow", "label": "Label", "default": "Festive drop" },
+    { "type": "text", "id": "festive_title", "label": "Title", "default": "New festive collection" },
+    { "type": "image_picker", "id": "festive_image", "label": "Image" },
+    { "type": "url", "id": "festive_link", "label": "Link" },
+    { "type": "header", "content": "Category tiles" },
+    { "type": "text", "id": "cat1_title", "label": "Tile 1 title", "default": "Men" },
+    { "type": "image_picker", "id": "cat1_image", "label": "Tile 1 image" },
+    { "type": "url", "id": "cat1_link", "label": "Tile 1 link" },
+    { "type": "text", "id": "cat2_title", "label": "Tile 2 title", "default": "Women" },
+    { "type": "image_picker", "id": "cat2_image", "label": "Tile 2 image" },
+    { "type": "url", "id": "cat2_link", "label": "Tile 2 link" },
+    { "type": "text", "id": "cat3_title", "label": "Tile 3 title", "default": "Kids" },
+    { "type": "image_picker", "id": "cat3_image", "label": "Tile 3 image" },
+    { "type": "url", "id": "cat3_link", "label": "Tile 3 link" },
+    { "type": "text", "id": "cat4_title", "label": "Tile 4 title", "default": "Baby" },
+    { "type": "image_picker", "id": "cat4_image", "label": "Tile 4 image" },
+    { "type": "url", "id": "cat4_link", "label": "Tile 4 link" },
+    { "type": "text", "id": "ticker", "label": "Ticker words (comma separated)", "default": "Men, Women, Kids, Baby, Ethnic, Family Sets, With you on every journey" },
+    { "type": "header", "content": "Shop by budget" },
+    { "type": "text", "id": "budget_heading", "label": "Heading", "default": "Shop by budget" },
+    { "type": "text", "id": "budget1", "label": "Budget 1 (₹)", "default": "499" },
+    { "type": "url", "id": "budget1_link", "label": "Budget 1 link" },
+    { "type": "text", "id": "budget2", "label": "Budget 2 (₹)", "default": "999" },
+    { "type": "url", "id": "budget2_link", "label": "Budget 2 link" },
+    { "type": "text", "id": "budget3", "label": "Budget 3 (₹)", "default": "1999" },
+    { "type": "url", "id": "budget3_link", "label": "Budget 3 link" },
+    { "type": "url", "id": "combo_link", "label": "Family combos link" },
+    { "type": "header", "content": "Trending products" },
+    { "type": "text", "id": "trending_heading", "label": "Heading", "default": "Trending this week" },
+    { "type": "collection", "id": "trending_collection", "label": "Collection" },
+    { "type": "header", "content": "Family look" },
+    { "type": "text", "id": "steps_heading", "label": "Heading", "default": "Build your family look in 3 taps" },
+    { "type": "textarea", "id": "steps_text", "label": "Text", "default": "Pick a colour, choose for each member, check out once. Matching outfits for functions, festivals and photos." },
+    { "type": "header", "content": "Instagram, review & store" },
+    { "type": "text", "id": "instagram_handle", "label": "Instagram handle", "default": "yathra_trendy_collections" },
+    { "type": "text", "id": "instagram_url", "label": "Instagram link", "default": "https://www.instagram.com/yathra_trendy_collections/" },
+    { "type": "image_picker", "id": "insta1", "label": "Instagram photo 1" },
+    { "type": "image_picker", "id": "insta2", "label": "Instagram photo 2" },
+    { "type": "image_picker", "id": "insta3", "label": "Instagram photo 3" },
+    { "type": "text", "id": "review", "label": "Review quote", "default": "Good varieties of collections and value of money." },
+    { "type": "text", "id": "review_source", "label": "Review source", "default": "Google review" },
+    { "type": "text", "id": "store_name", "label": "Store name", "default": "Galleria Shopping Complex, Vaduthala Junction" },
+    { "type": "textarea", "id": "store_address", "label": "Address & hours", "default": "Cherthala – Arookutty Rd, Arookutty, Kerala 688535 · Open till 9:30 PM" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "+91 79072 25945" },
+    { "type": "text", "id": "map_link", "label": "Directions link", "default": "https://maps.google.com/?q=Yathra+Trendy+Collections+Arookutty" }
+  ],
+  "presets": [{ "name": "Yathra Family Bento" }]
+}
+{% endschema %}

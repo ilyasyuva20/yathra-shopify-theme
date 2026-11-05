@@ -1,0 +1,644 @@
+{%- comment -%} Yathra · Editorial homepage {%- endcomment -%}
+{%- assign s = section.settings -%}
+{{ 'https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@700&display=swap' | stylesheet_tag }}
+<style>
+  {{ s.heading_font | font_face: font_display: 'swap' }}
+  {{ s.body_font | font_face: font_display: 'swap' }}
+  {%- assign body_bold = s.body_font | font_modify: 'weight', 'bold' -%}{{ body_bold | font_face: font_display: 'swap' }}
+  #ye-{{ section.id }}{--ink:#141414;--muted:#666;--line:#E6E6E6;--soft:#F5F6F7;--accent:{{ s.accent }};--sale:#C8202A;
+    --hf:{{ s.heading_font.family }},{{ s.heading_font.fallback_families }};--hw:{{ s.heading_font.weight }};
+    font-family:{{ s.body_font.family }},{{ s.body_font.fallback_families }};color:var(--ink);background:#fff;font-size:15px;line-height:1.55}
+  #ye-{{ section.id }} *{box-sizing:border-box}
+  #ye-{{ section.id }} a{color:inherit;text-decoration:none}
+  #ye-{{ section.id }} img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+  #ye-{{ section.id }} h2,#ye-{{ section.id }} h3,#ye-{{ section.id }} .ye-hfont{font-family:var(--hf);font-weight:var(--hw);color:var(--ink);letter-spacing:0}
+  #ye-{{ section.id }} :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  .ye-wrap{max-width:1400px;margin:0 auto;padding:0 40px}
+  .ye-sec{padding:56px 0 0}
+  .ye-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:24px}
+  #ye-{{ section.id }} .ye-head h2{margin:0;font-size:26px;line-height:1.2}
+  .ye-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
+  .ye-viewall{font-size:14px;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:1px;white-space:nowrap}
+
+  /* Hero slider (vibrant style) */
+  .ye-hero{position:relative;overflow:hidden;height:600px;background:{{ s.h1_bg }}}
+  .ye-slide{position:absolute;inset:0;visibility:hidden;overflow:hidden;z-index:0;clip-path:inset(0 0 0 100%)}
+  .ye-slide.is-active{visibility:visible;z-index:2;clip-path:inset(0 0 0 0);transition:clip-path 1.15s cubic-bezier(.77,0,.18,1)}
+  .ye-slide.is-leaving{visibility:visible;z-index:1;clip-path:inset(0 0 0 0)}
+  .ye-slide.is-leaving .ye-slide__in{transform:scale(.94) translateX(-4%);opacity:.35;transition:transform 1.15s cubic-bezier(.77,0,.18,1),opacity 1.15s ease}
+  .ye-slide__in{transition:none}
+  .ye-slide__in{position:relative;z-index:2;height:100%;max-width:1400px;margin:0 auto;padding:56px 56px 72px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:center}
+  .ye-deco{position:absolute;inset:0;z-index:1;pointer-events:none;width:100%;height:100%}
+  .ye-deco path,.ye-deco circle{fill:none;stroke-linecap:round}
+  .ye-deco .d-ring{stroke:rgba(255,255,255,.22);stroke-width:26;stroke-dasharray:1;stroke-dashoffset:1}
+  .ye-deco .d-red{stroke:#E0262D;stroke-width:22;stroke-dasharray:1;stroke-dashoffset:1}
+  .ye-slide.is-active .d-ring{animation:ye-draw 2.2s cubic-bezier(.65,0,.35,1) .5s forwards}
+  .ye-slide.is-active .d-red{animation:ye-draw 1.1s cubic-bezier(.65,0,.35,1) 1.3s forwards}
+  @keyframes ye-draw{to{stroke-dashoffset:0}}
+  .ye-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0E2236;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  .ye-pill i{width:8px;height:8px;border-radius:50%;background:#E0262D;display:block}
+  #ye-{{ section.id }} .ye-slide__title{margin:20px 0 0;color:#fff;font-weight:800;font-size:clamp(34px,4.4vw,62px);line-height:1.04;letter-spacing:-.01em;max-width:11em}
+  .ye-ml{margin:16px 0 0;font-family:'Noto Sans Malayalam',sans-serif;font-weight:700;font-size:clamp(20px,2vw,28px);color:#FFE27A}
+  .ye-slide__copy{margin:12px 0 0;font-size:17px;line-height:1.6;color:#fff;max-width:30em;font-weight:500}
+  .ye-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .ye-hbtn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;font-weight:700;font-size:15px;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+  .ye-hbtn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.2)}
+  .ye-hbtn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .8s cubic-bezier(.16,1,.3,1)}
+  .ye-hbtn:hover::after{transform:translateX(120%)}
+  #ye-{{ section.id }} .ye-hbtn--dark{background:#0E2236;color:#fff}
+  #ye-{{ section.id }} .ye-hbtn--light{background:#fff;color:#0E2236}
+  .ye-txt > *{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .ye-slide.is-active .ye-txt > *{opacity:1;transform:none}
+  .ye-slide.is-active .ye-txt > *:nth-child(1){transition-delay:.45s}
+  .ye-slide.is-active .ye-txt > *:nth-child(2){transition-delay:.5s;opacity:1;transform:none}
+  .ye-slide.is-active .ye-txt > *:nth-child(3){transition-delay:1.05s}
+  .ye-slide.is-active .ye-txt > *:nth-child(4){transition-delay:1.15s}
+  .ye-slide.is-active .ye-txt > *:nth-child(5){transition-delay:1.25s}
+  .ye-slide__title{opacity:1 !important;transform:none !important}
+  .ye-w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+  .ye-w > span{display:inline-block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1);transition-delay:calc(.5s + var(--i) * .07s)}
+  .ye-slide.is-active .ye-w > span{transform:none}
+  .ye-collage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:228px 228px;gap:16px}
+  .ye-tile{position:relative;border-radius:26px;overflow:hidden;background:rgba(255,255,255,.2);display:block}
+  .ye-pw{position:absolute;inset:-14px;display:block;transform:translate3d(calc(var(--mx,0) * -12px),calc(var(--my,0) * -10px),0);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+  .ye-tile img{transform:scale(1.14);transition:transform 9s cubic-bezier(.16,1,.3,1)}
+  .ye-slide.is-active .ye-tile img{transform:scale(1)}
+  .ye-collage{transform:translate3d(calc(var(--mx,0) * 10px),calc(var(--my,0) * 8px),0);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+  .ye-tile--big::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(105deg,rgba(255,255,255,0) 35%,rgba(255,255,255,.35) 50%,rgba(255,255,255,0) 65%);transform:translateX(-120%)}
+  .ye-slide.is-active .ye-tile--big::after{animation:ye-sheen 1.6s cubic-bezier(.4,0,.2,1) 1.5s forwards}
+  @keyframes ye-sheen{to{transform:translateX(120%)}}
+  .ye-tile--big{grid-row:span 2;clip-path:inset(100% 0 0 0 round 26px);transition:clip-path 1.3s cubic-bezier(.77,0,.18,1) .35s}
+  .ye-slide.is-active .ye-tile--big{clip-path:inset(0 0 0 0 round 26px)}
+  .ye-tile--small{clip-path:inset(0 0 0 100% round 26px);transition:clip-path 1.2s cubic-bezier(.77,0,.18,1) .7s}
+  .ye-slide.is-active .ye-tile--small{clip-path:inset(0 0 0 0 round 26px)}
+  .ye-tile--offer{background:#E0262D;color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transform:translateY(40px);transition:opacity .9s ease 1s,transform 1.2s cubic-bezier(.16,1,.3,1) 1s}
+  .ye-slide.is-active .ye-tile--offer{opacity:1;transform:none}
+  #ye-{{ section.id }} .ye-tile--offer,#ye-{{ section.id }} .ye-tile--offer b{color:#fff}
+  .ye-slide.is-active .ye-tile--offer .ye-float{animation:ye-float 6s ease-in-out 2.4s infinite}
+  @keyframes ye-float{50%{transform:translateY(-4px)}}
+  .ye-tile--offer small{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .ye-tile--offer b{font-size:clamp(24px,2.4vw,34px);font-weight:800;line-height:1.05;display:block}
+  .ye-tile--offer span{font-size:14px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.7);align-self:flex-start}
+  .ye-count{position:absolute;left:56px;bottom:22px;z-index:4;display:flex;align-items:center;gap:12px;color:#fff;font-size:13px;font-weight:600;letter-spacing:.08em}
+  .ye-count__num{display:inline-block;height:1.2em;overflow:hidden;line-height:1.2}
+  .ye-count__num span{display:block;transition:transform .9s cubic-bezier(.77,0,.18,1)}
+  .ye-count i{display:block;width:40px;height:1px;background:rgba(255,255,255,.6)}
+  .ye-dots{position:absolute;right:56px;bottom:18px;display:flex;gap:10px;z-index:4}
+  .ye-dot{display:block;width:34px;height:4px;border-radius:4px;background:rgba(255,255,255,.35);position:relative;overflow:hidden}
+  .ye-dot::after{content:"";position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left}
+  .ye-dot.is-active::after{animation:ye-progress var(--ye-delay,6s) linear forwards}
+  .ye-hero.is-paused .ye-dot.is-active::after{animation-play-state:paused}
+  @keyframes ye-progress{to{transform:scaleX(1)}}
+  .ye-dot-hit{padding:14px 0;background:none;border:0;cursor:pointer}
+  .ye-arrow{position:absolute;top:50%;z-index:4;width:46px;height:46px;margin-top:-23px;border-radius:50%;border:0;background:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);opacity:0;transition:opacity .25s,transform .2s}
+  .ye-arrow:hover{transform:scale(1.08)}
+  .ye-hero:hover .ye-arrow,.ye-arrow:focus-visible{opacity:1}
+  .ye-arrow--prev{left:16px}
+  .ye-arrow--next{right:16px}
+  .ye-btn{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:28px;min-height:48px;padding:0 32px;background:var(--ink);color:#fff !important;font-size:14px;font-weight:600;letter-spacing:.02em;transition:background .2s}
+  .ye-btn:hover{background:var(--accent)}
+
+  /* Categories */
+  .ye-cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+  .ye-cat{display:block}
+  .ye-cat__img{display:block;aspect-ratio:3/4;overflow:hidden;background:var(--soft)}
+  .ye-cat__img img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .ye-cat:hover .ye-cat__img img{transform:scale(1.05)}
+  .ye-cat__name{display:block;margin-top:12px;font-size:15px;font-weight:600}
+  .ye-cat__sub{display:block;font-size:13px;color:var(--muted)}
+
+  /* Product rail */
+  .ye-railwrap{position:relative}
+  .ye-rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*20px)/4);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px}
+  .ye-rail::-webkit-scrollbar{display:none}
+  .ye-railbtns{display:flex;gap:8px}
+  .ye-railbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s}
+  .ye-railbtn:hover{border-color:var(--ink)}
+  .ye-railbtn:disabled{opacity:.35;cursor:default}
+  .ye-card{scroll-snap-align:start;display:flex;flex-direction:column;min-width:0}
+  .ye-card__media{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:var(--soft)}
+  .ye-card__media img{transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .4s}
+  .ye-card:hover .ye-card__media img{transform:scale(1.04)}
+  .ye-card__media .ye-alt{position:absolute;inset:0;opacity:0}
+  .ye-card:hover .ye-card__media .ye-alt{opacity:1}
+  .ye-badge{position:absolute;top:12px;left:12px;background:#fff;font-size:12px;font-weight:600;padding:4px 10px}
+  .ye-badge--sale{background:var(--sale);color:#fff}
+  .ye-quick{position:absolute;left:12px;right:12px;bottom:12px;transform:translateY(calc(100% + 14px));transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .ye-card:hover .ye-quick,.ye-card:focus-within .ye-quick{transform:none}
+  .ye-quick button{width:100%;min-height:44px;border:0;background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.12);transition:background .2s,color .2s}
+  .ye-quick button:hover{background:var(--ink);color:#fff}
+  .ye-quick button[data-state="added"]{background:var(--accent);color:#fff}
+  .ye-card__vendor{margin-top:12px;font-size:12px;color:var(--muted)}
+  .ye-card__title{margin-top:2px;font-size:14px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .ye-card__price{margin-top:6px;font-size:15px;font-weight:700}
+  .ye-card__price s{font-weight:400;color:var(--muted);margin-left:6px;font-size:13px}
+  .ye-card__price em{font-style:normal;color:var(--sale);font-size:13px;margin-left:6px;font-weight:600}
+
+  /* Promo pair */
+  .ye-promos{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .ye-promo{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--soft)}
+  #ye-{{ section.id }} .ye-promo img{transition:transform .8s cubic-bezier(.2,.7,.2,1);object-position:50% 14%}
+  .ye-promo:hover img{transform:scale(1.04)}
+  .ye-promo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0) 55%)}
+  .ye-promo__text{position:absolute;left:32px;right:32px;bottom:28px;z-index:1;color:#fff}
+  #ye-{{ section.id }} .ye-promo__text h3{margin:0;font-size:28px;line-height:1.2;color:#fff}
+  .ye-promo__text p{margin:6px 0 0;font-size:15px;opacity:.92}
+  .ye-promo__text span{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;border-bottom:1px solid #fff;padding-bottom:1px}
+
+  /* Service bar */
+  .ye-service{margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .ye-service__in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .ye-service__item{display:flex;align-items:center;gap:14px;padding:26px 24px}
+  .ye-service__item + .ye-service__item{border-left:1px solid var(--line)}
+  .ye-service__item svg{flex:0 0 auto}
+  .ye-service__item b{display:block;font-size:14px;font-weight:600}
+  .ye-service__item small{display:block;font-size:13px;color:var(--muted)}
+
+  /* Instagram */
+  .ye-ig{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+  .ye-ig a{position:relative;display:block;aspect-ratio:1;overflow:hidden;background:var(--soft)}
+  .ye-ig a::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .3s}
+  .ye-ig a:hover::after{background:rgba(0,0,0,.18)}
+  .ye-ig img{transition:transform .6s}
+  .ye-ig a:hover img{transform:scale(1.05)}
+
+  /* Reveal */
+  .ye-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .ye-reveal.is-in{opacity:1;transform:none}
+
+  @media (max-width:1100px){
+    .ye-rail{grid-auto-columns:calc((100% - 2*16px)/3);gap:16px}
+    .ye-cats{grid-template-columns:repeat(5,minmax(160px,1fr));overflow-x:auto;scroll-snap-type:x mandatory}
+    .ye-cat{scroll-snap-align:start}
+  }
+  @media (max-width:800px){
+    .ye-wrap{padding:0 16px}
+    .ye-hero{height:auto}
+    .ye-slide{position:relative;display:none}
+    .ye-slide.is-active{display:block}
+    .ye-slide__in{grid-template-columns:1fr;gap:28px;padding:36px 16px 56px}
+    .ye-collage{grid-template-rows:170px 170px;gap:10px}
+    .ye-tile{border-radius:18px}
+    .ye-dots{bottom:14px;right:16px}
+    .ye-count{left:16px;bottom:18px}
+    .ye-collage{transform:none}
+    .ye-pw{transform:none}
+    .ye-arrow{display:none}
+    .ye-rail{grid-auto-columns:calc((100% - 12px)/2.15);gap:12px}
+    .ye-quick{transform:none;left:8px;right:8px;bottom:8px}
+    .ye-quick button{min-height:38px;font-size:13px}
+    .ye-promos{grid-template-columns:1fr}
+    .ye-service__in{grid-template-columns:1fr 1fr}
+    .ye-service__item:nth-child(3){border-left:0}
+    .ye-service__item:nth-child(n+3){border-top:1px solid var(--line)}
+    .ye-ig{grid-template-columns:repeat(3,minmax(0,1fr))}
+    #ye-{{ section.id }} .ye-head h2{font-size:21px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .ye-slide,.ye-txt > *,.ye-tile,.ye-tile img,.ye-reveal,.ye-card__media img,.ye-cat__img img,.ye-promo img{transition:none !important;transform:none !important}
+    .ye-reveal{opacity:1}
+    .ye-dot.is-active::after{animation:none;transform:scaleX(1)}
+    .ye-deco .d-ring,.ye-deco .d-red{animation:none !important;stroke-dashoffset:0}
+    .ye-tile--big{clip-path:none}
+    .ye-tile--small,.ye-tile--offer{opacity:1}
+    .ye-float{animation:none !important}
+    .ye-w > span{transform:none !important;transition:none !important}
+    .ye-slide.is-active,.ye-tile--small{clip-path:none !important}
+    .ye-tile--big::after{display:none}
+    .ye-collage,.ye-pw{transform:none !important}
+  }
+</style>
+
+<div id="ye-{{ section.id }}">
+  {%- comment -%} Hero {%- endcomment -%}
+  <section class="ye-hero" data-ye-hero data-delay="{{ s.hero_delay | times: 1000 }}" style="--ye-delay:{{ s.hero_delay }}s" aria-roledescription="carousel" aria-label="Featured collections">
+    {%- for k in (1..3) -%}
+      {%- liquid
+        case k
+          when 1
+            assign h_label = s.h1_label
+            assign h_title = s.h1_title
+            assign h_text = s.h1_text
+            assign h_btn = s.h1_button
+            assign h_link = s.h1_link
+            assign h_bg = s.h1_bg
+            assign h_a = s.h1_img_a
+            assign h_b = s.h1_img_b
+            assign h_ol = s.h1_offer_label
+            assign h_ot = s.h1_offer_title
+          when 2
+            assign h_label = s.h2_label
+            assign h_title = s.h2_title
+            assign h_text = s.h2_text
+            assign h_btn = s.h2_button
+            assign h_link = s.h2_link
+            assign h_bg = s.h2_bg
+            assign h_a = s.h2_img_a
+            assign h_b = s.h2_img_b
+            assign h_ol = s.h2_offer_label
+            assign h_ot = s.h2_offer_title
+          when 3
+            assign h_label = s.h3_label
+            assign h_title = s.h3_title
+            assign h_text = s.h3_text
+            assign h_btn = s.h3_button
+            assign h_link = s.h3_link
+            assign h_bg = s.h3_bg
+            assign h_a = s.h3_img_a
+            assign h_b = s.h3_img_b
+            assign h_ol = s.h3_offer_label
+            assign h_ot = s.h3_offer_title
+        endcase
+        assign h_url = h_link | default: routes.all_products_collection_url
+      -%}
+      {%- if h_title != blank -%}
+        <div class="ye-slide{% if k == 1 %} is-active{% endif %}" data-ye-slide role="group" aria-roledescription="slide" aria-label="{{ k }} of 3" style="background:{{ h_bg }}">
+          <svg class="ye-deco" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <circle class="d-ring" pathLength="1" cx="1280" cy="470" r="210"/>
+            <path class="d-red" pathLength="1" d="M760 640 C 860 560 930 470 950 330"/>
+          </svg>
+          <div class="ye-slide__in">
+            <div class="ye-txt">
+              <span class="ye-pill"><i></i>{{ h_label }}</span>
+              <h2 class="ye-slide__title">{{ h_title }}</h2>
+              {%- if s.hero_ml != blank -%}<p class="ye-ml" lang="ml">{{ s.hero_ml }}</p>{%- endif -%}
+              <p class="ye-slide__copy">{{ h_text }}</p>
+              <div class="ye-ctas">
+                <a class="ye-hbtn ye-hbtn--dark" href="{{ h_url }}">{{ h_btn }}</a>
+                <a class="ye-hbtn ye-hbtn--light" href="{{ s.hero_store_link | default: '/pages/contact' }}">Visit our store</a>
+              </div>
+            </div>
+            <div class="ye-collage">
+              <a class="ye-tile ye-tile--big" href="{{ h_url }}" tabindex="-1" aria-hidden="true"><span class="ye-pw">{%- if h_a != blank -%}{{ h_a | image_url: width: 1000 | image_tag: loading: 'eager', alt: '' }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}</span></a>
+              <a class="ye-tile ye-tile--small" href="{{ h_url }}" tabindex="-1" aria-hidden="true"><span class="ye-pw">{%- if h_b != blank -%}{{ h_b | image_url: width: 700 | image_tag: loading: 'eager', alt: '' }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}</span></a>
+              <a class="ye-tile ye-tile--offer" href="{{ h_url }}"><small>{{ h_ol }}</small><span class="ye-float" style="border:0"><b>{{ h_ot }}</b></span><span>Shop now</span></a>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+    <button class="ye-arrow ye-arrow--prev" type="button" data-ye-prev aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="ye-arrow ye-arrow--next" type="button" data-ye-next aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="ye-count" aria-hidden="true"><span class="ye-count__num" data-ye-num><span>01</span></span><i></i><span data-ye-total>03</span></div>
+    <div class="ye-dots" data-ye-dots></div>
+  </section>
+
+  {%- comment -%} Categories {%- endcomment -%}
+  <section class="ye-sec ye-reveal" data-ye-reveal>
+    <div class="ye-wrap">
+      <div class="ye-head"><div><h2>{{ s.cat_heading }}</h2></div></div>
+      <div class="ye-cats">
+        {%- for k in (1..5) -%}
+          {%- liquid
+            case k
+              when 1
+                assign c_t = s.c1_title
+                assign c_s = s.c1_sub
+                assign c_i = s.c1_image
+                assign c_l = s.c1_link
+              when 2
+                assign c_t = s.c2_title
+                assign c_s = s.c2_sub
+                assign c_i = s.c2_image
+                assign c_l = s.c2_link
+              when 3
+                assign c_t = s.c3_title
+                assign c_s = s.c3_sub
+                assign c_i = s.c3_image
+                assign c_l = s.c3_link
+              when 4
+                assign c_t = s.c4_title
+                assign c_s = s.c4_sub
+                assign c_i = s.c4_image
+                assign c_l = s.c4_link
+              when 5
+                assign c_t = s.c5_title
+                assign c_s = s.c5_sub
+                assign c_i = s.c5_image
+                assign c_l = s.c5_link
+            endcase
+          -%}
+          <a class="ye-cat" href="{{ c_l | default: routes.all_products_collection_url }}">
+            <span class="ye-cat__img">{%- if c_i != blank -%}{{ c_i | image_url: width: 600 | image_tag: loading: 'lazy', alt: c_t }}{%- else -%}{{ 'apparel-' | append: k | placeholder_svg_tag }}{%- endif -%}</span>
+            <span class="ye-cat__name">{{ c_t }}</span>
+            <span class="ye-cat__sub">{{ c_s }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Product rails {%- endcomment -%}
+  {%- for r in (1..2) -%}
+    {%- liquid
+      if r == 1
+        assign rc = s.rail1_collection
+        assign rh = s.rail1_heading
+        assign rp = s.rail1_text
+      else
+        assign rc = s.rail2_collection
+        assign rh = s.rail2_heading
+        assign rp = s.rail2_text
+      endif
+    -%}
+    {%- if rc != blank and rc.products_count > 0 -%}
+      <section class="ye-sec ye-reveal" data-ye-reveal>
+        <div class="ye-wrap">
+          <div class="ye-head">
+            <div><h2>{{ rh }}</h2>{%- if rp != blank -%}<p>{{ rp }}</p>{%- endif -%}</div>
+            <div style="display:flex;align-items:center;gap:20px">
+              <a class="ye-viewall" href="{{ rc.url }}">View all</a>
+              <div class="ye-railbtns">
+                <button class="ye-railbtn" type="button" data-ye-railprev aria-label="Scroll back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <button class="ye-railbtn" type="button" data-ye-railnext aria-label="Scroll forward"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="ye-rail" data-ye-rail>
+            {%- for product in rc.products limit: 12 -%}
+              {%- assign v = product.selected_or_first_available_variant -%}
+              <div class="ye-card">
+                <div class="ye-card__media">
+                  <a href="{{ product.url }}" style="display:block;width:100%;height:100%" tabindex="-1" aria-hidden="true">
+                    {%- if product.featured_media -%}{{ product.featured_media | image_url: width: 700 | image_tag: loading: 'lazy', alt: '', sizes: '(min-width: 1100px) 25vw, 50vw' }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
+                    {%- if product.media[1] -%}<span class="ye-alt">{{ product.media[1] | image_url: width: 700 | image_tag: loading: 'lazy', alt: '' }}</span>{%- endif -%}
+                  </a>
+                  {%- if product.compare_at_price > product.price -%}<span class="ye-badge ye-badge--sale">Sale</span>{%- elsif forloop.index <= 2 and r == 1 -%}<span class="ye-badge">New</span>{%- endif -%}
+                  {%- if product.available and product.price > 0 -%}
+                    <form action="{{ routes.cart_add_url }}" method="post" class="ye-quick ye-addform">
+                      <input type="hidden" name="id" value="{{ v.id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <button type="submit">Add to bag</button>
+                    </form>
+                  {%- endif -%}
+                </div>
+                <span class="ye-card__vendor">{{ product.type | default: product.vendor }}</span>
+                <a class="ye-card__title" href="{{ product.url }}">{{ product.title }}</a>
+                <span class="ye-card__price">
+                  {%- if product.price > 0 -%}{{ product.price | money_without_trailing_zeros }}{%- else -%}Price on request{%- endif -%}
+                  {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money_without_trailing_zeros }}</s><em>{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% off</em>{%- endif -%}
+                </span>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+    {%- if r == 1 -%}
+      {%- comment -%} Promo pair between rails {%- endcomment -%}
+      <section class="ye-sec ye-reveal" data-ye-reveal>
+        <div class="ye-wrap ye-promos">
+          <a class="ye-promo" href="{{ s.p1_link | default: routes.all_products_collection_url }}">
+            {%- if s.p1_image != blank -%}{{ s.p1_image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: s.p1_title }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}
+            <span class="ye-promo__text"><h3>{{ s.p1_title }}</h3><p>{{ s.p1_text }}</p><span>Shop now</span></span>
+          </a>
+          <a class="ye-promo" href="{{ s.p2_link | default: routes.all_products_collection_url }}">
+            {%- if s.p2_image != blank -%}{{ s.p2_image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: s.p2_title }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}
+            <span class="ye-promo__text"><h3>{{ s.p2_title }}</h3><p>{{ s.p2_text }}</p><span>Shop now</span></span>
+          </a>
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Service bar {%- endcomment -%}
+  <section class="ye-service">
+    <div class="ye-wrap ye-service__in">
+      <div class="ye-service__item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.4" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="1.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/></svg><span><b>Cash on delivery</b><small>Across Kerala</small></span></div>
+      <div class="ye-service__item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.4" aria-hidden="true"><path d="M4 9h13l-3-3M20 15H7l3 3"/></svg><span><b>Easy exchange</b><small>At our Vaduthala store</small></span></div>
+      <div class="ye-service__item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.4" aria-hidden="true"><path d="M3 9l2-5h14l2 5M3 9h18v11H3zM9 20v-6h6v6"/></svg><span><b>Store pickup</b><small>Galleria, Vaduthala Jn.</small></span></div>
+      <div class="ye-service__item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.4" aria-hidden="true"><path d="M4 20l1.3-3.8A8 8 0 1 1 8 19z"/></svg><span><b>WhatsApp help</b><small><a href="https://wa.me/{{ s.whatsapp }}">Chat with us</a></small></span></div>
+    </div>
+  </section>
+
+  {%- comment -%} Instagram {%- endcomment -%}
+  <section class="ye-sec ye-reveal" data-ye-reveal style="padding-bottom:64px">
+    <div class="ye-wrap">
+      <div class="ye-head">
+        <div><h2>{{ s.ig_heading }}</h2><p>@{{ s.instagram_handle }}</p></div>
+        <a class="ye-viewall" href="{{ s.instagram_url }}" target="_blank" rel="noopener">Follow us</a>
+      </div>
+      <div class="ye-ig">
+        {%- for k in (1..6) -%}
+          {%- liquid
+            case k
+              when 1
+                assign im = s.ig1
+              when 2
+                assign im = s.ig2
+              when 3
+                assign im = s.ig3
+              when 4
+                assign im = s.ig4
+              when 5
+                assign im = s.ig5
+              when 6
+                assign im = s.ig6
+            endcase
+          -%}
+          <a href="{{ s.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram post {{ k }}">{%- if im != blank -%}{{ im | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function(){
+    function initHero(root){
+      var hero = root.querySelector('[data-ye-hero]'); if (!hero || hero.__ye) return; hero.__ye = true;
+      var slides = [].slice.call(hero.querySelectorAll('[data-ye-slide]')); if (!slides.length) return;
+      var dotsBox = hero.querySelector('[data-ye-dots]'), num = hero.querySelector('[data-ye-num]'), total = hero.querySelector('[data-ye-total]');
+      var i = 0, timer = null, delay = parseInt(hero.dataset.delay,10) || 6000, busy = false;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var pad = function(n){ return (n < 10 ? '0' : '') + n; };
+      if (total) total.textContent = pad(slides.length);
+      slides.forEach(function(sl){
+        var h = sl.querySelector('.ye-slide__title'); if (!h || h.__split) return; h.__split = true;
+        var words = h.textContent.trim().split(/\s+/);
+        h.setAttribute('aria-label', h.textContent.trim());
+        h.innerHTML = words.map(function(w, n){ return '<span class="ye-w" aria-hidden="true"><span style="--i:' + n + '">' + w.replace(/</g,'&lt;') + '</span></span>'; }).join(' ');
+      });
+      var dots = slides.map(function(_, n){
+        var hit = document.createElement('button'); hit.type='button'; hit.className='ye-dot-hit'; hit.setAttribute('aria-label','Show slide '+(n+1));
+        var d = document.createElement('span'); d.className='ye-dot'; hit.appendChild(d);
+        hit.addEventListener('click', function(){ go(n); });
+        dotsBox.appendChild(hit); return d;
+      });
+      function setNum(n){
+        if (!num) return;
+        var old = num.firstElementChild, nu = document.createElement('span'); nu.textContent = pad(n+1);
+        nu.style.transform = 'translateY(100%)'; num.appendChild(nu);
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ old.style.transform='translateY(-100%)'; nu.style.transform='translateY(-100%)'; }); });
+        setTimeout(function(){ if (old.parentNode) old.remove(); nu.style.transition='none'; nu.style.transform='none'; void nu.offsetWidth; nu.style.transition=''; }, 950);
+      }
+      function go(n){
+        n = (n + slides.length) % slides.length; if (n === i || busy) return;
+        busy = true;
+        var prev = slides[i];
+        slides.forEach(function(s){ s.classList.remove('is-leaving'); });
+        prev.classList.remove('is-active'); prev.classList.add('is-leaving');
+        dots[i].classList.remove('is-active');
+        i = n;
+        void slides[i].offsetWidth;
+        slides[i].classList.add('is-active'); void dots[i].offsetWidth; dots[i].classList.add('is-active');
+        setNum(i);
+        setTimeout(function(){ prev.classList.remove('is-leaving'); busy = false; }, reduce ? 0 : 1200);
+        restart();
+      }
+      function restart(){ clearTimeout(timer); if (!reduce && slides.length > 1 && !hero.classList.contains('is-paused')) timer = setTimeout(function(){ go(i+1); }, delay); }
+      dots[0].classList.add('is-active');
+      hero.querySelector('[data-ye-prev]').addEventListener('click', function(){ go(i-1); });
+      hero.querySelector('[data-ye-next]').addEventListener('click', function(){ go(i+1); });
+      hero.addEventListener('mouseenter', function(){ hero.classList.add('is-paused'); clearTimeout(timer); });
+      hero.addEventListener('mouseleave', function(){ hero.classList.remove('is-paused'); hero.style.setProperty('--mx',0); hero.style.setProperty('--my',0); restart(); });
+      hero.addEventListener('focusin', function(){ hero.classList.add('is-paused'); clearTimeout(timer); });
+      if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+        var raf = null;
+        hero.addEventListener('mousemove', function(e){
+          if (raf) return;
+          raf = requestAnimationFrame(function(){
+            var r = hero.getBoundingClientRect();
+            hero.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+            hero.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
+            raf = null;
+          });
+        });
+      }
+      restart();
+    }
+    function initRails(root){
+      root.querySelectorAll('[data-ye-rail]').forEach(function(rail){
+        if (rail.__ye) return; rail.__ye = true;
+        var sec = rail.closest('section'), prev = sec.querySelector('[data-ye-railprev]'), next = sec.querySelector('[data-ye-railnext]');
+        function step(){ return rail.clientWidth * 0.9; }
+        function update(){ prev.disabled = rail.scrollLeft <= 4; next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4; }
+        prev.addEventListener('click', function(){ rail.scrollBy({left:-step()}); });
+        next.addEventListener('click', function(){ rail.scrollBy({left:step()}); });
+        rail.addEventListener('scroll', update, {passive:true}); update();
+      });
+    }
+    function initReveal(root){
+      var els = root.querySelectorAll('[data-ye-reveal]:not(.is-in)');
+      if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('is-in'); }); return; }
+      var io = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('is-in'); io.unobserve(en.target); } }); }, {rootMargin:'0px 0px -8% 0px'});
+      els.forEach(function(e){ io.observe(e); });
+    }
+    function init(root){ initHero(root); initRails(root); initReveal(root); }
+    var me = document.getElementById('ye-{{ section.id }}'); if (me) init(me);
+    if (!window.__yeBound){
+      window.__yeBound = true;
+      document.addEventListener('shopify:section:load', function(e){ var r = e.target.querySelector('[id^="ye-"]'); if (r) init(r); });
+      document.addEventListener('submit', function(e){
+        var form = e.target;
+        if (!form || !form.classList || !form.classList.contains('ye-addform')) return;
+        e.preventDefault();
+        var btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Adding…';
+        fetch((window.Shopify && Shopify.routes ? Shopify.routes.root : '/') + 'cart/add.js', {method:'POST', headers:{'Accept':'application/json'}, body:new FormData(form)})
+          .then(function(r){ if(!r.ok) throw r; return r.json(); })
+          .then(function(){ btn.dataset.state='added'; btn.textContent='Added to bag'; document.dispatchEvent(new CustomEvent('cart:update',{bubbles:true})); setTimeout(function(){ btn.dataset.state=''; btn.textContent='Add to bag'; }, 2500); })
+          .catch(function(){ btn.textContent='Choose size on product page'; })
+          .finally(function(){ btn.disabled=false; });
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yathra Editorial Home",
+  "tag": "div",
+  "class": "yathra-editorial",
+  "settings": [
+    { "type": "header", "content": "Style" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "poppins_n5" },
+    { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "poppins_n4" },
+    { "type": "color", "id": "accent", "label": "Accent colour", "default": "#1B7DB8" },
+    { "type": "header", "content": "Hero slider" },
+    { "type": "text", "id": "hero_ml", "label": "Malayalam tagline", "default": "നമ്മുടെ സ്വന്തം തുണിക്കട" },
+    { "type": "url", "id": "hero_store_link", "label": "Visit store link" },
+    { "type": "range", "id": "hero_delay", "label": "Seconds per slide", "min": 3, "max": 10, "step": 1, "default": 6 },
+    { "type": "text", "id": "h1_label", "label": "Slide 1 label", "default": "The complete family store" },
+    { "type": "text", "id": "h1_title", "label": "Slide 1 title", "default": "Embroidered sets for every celebration" },
+    { "type": "text", "id": "h1_text", "label": "Slide 1 text", "default": "Kurta sets, salwar suits and churidhars with matching dupattas." },
+    { "type": "text", "id": "h1_button", "label": "Slide 1 button", "default": "Shop women" },
+    { "type": "url", "id": "h1_link", "label": "Slide 1 link" },
+    { "type": "color", "id": "h1_bg", "label": "Slide 1 background", "default": "#2A92D8" },
+    { "type": "text", "id": "h1_offer_label", "label": "Slide 1 red tile label", "default": "Festive drop" },
+    { "type": "text", "id": "h1_offer_title", "label": "Slide 1 red tile title", "default": "New arrivals are in" },
+    { "type": "image_picker", "id": "h1_img_a", "label": "Slide 1 image A" },
+    { "type": "image_picker", "id": "h1_img_b", "label": "Slide 1 image B" },
+    { "type": "text", "id": "h2_label", "label": "Slide 2 label", "default": "Little ones" },
+    { "type": "text", "id": "h2_title", "label": "Slide 2 title", "default": "Party frocks and everyday dresses" },
+    { "type": "text", "id": "h2_text", "label": "Slide 2 text", "default": "Soft fabrics and bright colours for birthdays, functions and school days." },
+    { "type": "text", "id": "h2_button", "label": "Slide 2 button", "default": "Shop kids" },
+    { "type": "url", "id": "h2_link", "label": "Slide 2 link" },
+    { "type": "color", "id": "h2_bg", "label": "Slide 2 background", "default": "#2A92D8" },
+    { "type": "text", "id": "h2_offer_label", "label": "Slide 2 red tile label", "default": "Kids" },
+    { "type": "text", "id": "h2_offer_title", "label": "Slide 2 red tile title", "default": "Party wear for little stars" },
+    { "type": "image_picker", "id": "h2_img_a", "label": "Slide 2 image A" },
+    { "type": "image_picker", "id": "h2_img_b", "label": "Slide 2 image B" },
+    { "type": "text", "id": "h3_label", "label": "Slide 3 label", "default": "Men" },
+    { "type": "text", "id": "h3_title", "label": "Slide 3 title", "default": "Shirts that work from office to occasion" },
+    { "type": "text", "id": "h3_text", "label": "Slide 3 text", "default": "Smart casuals and statement shirts, ready to wear." },
+    { "type": "text", "id": "h3_button", "label": "Slide 3 button", "default": "Shop men" },
+    { "type": "url", "id": "h3_link", "label": "Slide 3 link" },
+    { "type": "color", "id": "h3_bg", "label": "Slide 3 background", "default": "#2A92D8" },
+    { "type": "text", "id": "h3_offer_label", "label": "Slide 3 red tile label", "default": "Men" },
+    { "type": "text", "id": "h3_offer_title", "label": "Slide 3 red tile title", "default": "Fresh shirts every week" },
+    { "type": "image_picker", "id": "h3_img_a", "label": "Slide 3 image A" },
+    { "type": "image_picker", "id": "h3_img_b", "label": "Slide 3 image B" },
+    { "type": "header", "content": "Categories" },
+    { "type": "text", "id": "cat_heading", "label": "Heading", "default": "Shop by category" },
+    { "type": "text", "id": "c1_title", "label": "Category 1", "default": "Women" },
+    { "type": "text", "id": "c1_sub", "label": "Category 1 note", "default": "Salwars, kurtas, churidhars" },
+    { "type": "image_picker", "id": "c1_image", "label": "Category 1 image" },
+    { "type": "url", "id": "c1_link", "label": "Category 1 link" },
+    { "type": "text", "id": "c2_title", "label": "Category 2", "default": "Men" },
+    { "type": "text", "id": "c2_sub", "label": "Category 2 note", "default": "Shirts and casuals" },
+    { "type": "image_picker", "id": "c2_image", "label": "Category 2 image" },
+    { "type": "url", "id": "c2_link", "label": "Category 2 link" },
+    { "type": "text", "id": "c3_title", "label": "Category 3", "default": "Girls" },
+    { "type": "text", "id": "c3_sub", "label": "Category 3 note", "default": "Frocks and dresses" },
+    { "type": "image_picker", "id": "c3_image", "label": "Category 3 image" },
+    { "type": "url", "id": "c3_link", "label": "Category 3 link" },
+    { "type": "text", "id": "c4_title", "label": "Category 4", "default": "Ethnic sets" },
+    { "type": "text", "id": "c4_sub", "label": "Category 4 note", "default": "Three-piece and embroidered" },
+    { "type": "image_picker", "id": "c4_image", "label": "Category 4 image" },
+    { "type": "url", "id": "c4_link", "label": "Category 4 link" },
+    { "type": "text", "id": "c5_title", "label": "Category 5", "default": "New arrivals" },
+    { "type": "text", "id": "c5_sub", "label": "Category 5 note", "default": "Fresh this week" },
+    { "type": "image_picker", "id": "c5_image", "label": "Category 5 image" },
+    { "type": "url", "id": "c5_link", "label": "Category 5 link" },
+    { "type": "header", "content": "Product slider 1" },
+    { "type": "text", "id": "rail1_heading", "label": "Heading", "default": "New arrivals" },
+    { "type": "text", "id": "rail1_text", "label": "Subheading", "default": "Just landed at Yathra" },
+    { "type": "collection", "id": "rail1_collection", "label": "Collection" },
+    { "type": "header", "content": "Promo banners" },
+    { "type": "text", "id": "p1_title", "label": "Banner 1 title", "default": "Ethnic sets" },
+    { "type": "text", "id": "p1_text", "label": "Banner 1 text", "default": "Embroidered suits with dupatta" },
+    { "type": "image_picker", "id": "p1_image", "label": "Banner 1 image" },
+    { "type": "url", "id": "p1_link", "label": "Banner 1 link" },
+    { "type": "text", "id": "p2_title", "label": "Banner 2 title", "default": "Kids party wear" },
+    { "type": "text", "id": "p2_text", "label": "Banner 2 text", "default": "Frocks for every celebration" },
+    { "type": "image_picker", "id": "p2_image", "label": "Banner 2 image" },
+    { "type": "url", "id": "p2_link", "label": "Banner 2 link" },
+    { "type": "header", "content": "Product slider 2" },
+    { "type": "text", "id": "rail2_heading", "label": "Heading", "default": "Women's collection" },
+    { "type": "text", "id": "rail2_text", "label": "Subheading", "default": "Salwar suits, kurta sets and churidhars" },
+    { "type": "collection", "id": "rail2_collection", "label": "Collection" },
+    { "type": "header", "content": "Instagram & contact" },
+    { "type": "text", "id": "ig_heading", "label": "Heading", "default": "Seen on Instagram" },
+    { "type": "text", "id": "instagram_handle", "label": "Instagram handle", "default": "yathra_trendy_collections" },
+    { "type": "text", "id": "instagram_url", "label": "Instagram link", "default": "https://www.instagram.com/yathra_trendy_collections/" },
+    { "type": "image_picker", "id": "ig1", "label": "Photo 1" },
+    { "type": "image_picker", "id": "ig2", "label": "Photo 2" },
+    { "type": "image_picker", "id": "ig3", "label": "Photo 3" },
+    { "type": "image_picker", "id": "ig4", "label": "Photo 4" },
+    { "type": "image_picker", "id": "ig5", "label": "Photo 5" },
+    { "type": "image_picker", "id": "ig6", "label": "Photo 6" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number (digits with country code)", "default": "917907225945" }
+  ],
+  "presets": [{ "name": "Yathra Editorial Home" }]
+}
+{% endschema %}

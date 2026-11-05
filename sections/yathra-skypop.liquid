@@ -1,0 +1,411 @@
+{%- comment -%} Yathra · Sky Blue Pop homepage section {%- endcomment -%}
+{{ 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Baloo+Chettan+2:wght@500;700&display=swap' | stylesheet_tag }}
+{%- assign s = section.settings -%}
+<style>
+  #sp-{{ section.id }}{--sp-blue:{{ s.blue }};--sp-ink:#0E2236;--sp-red:#D7262B;--sp-sun:#FFE27A;--sp-cloud:#EEF7FD;--sp-line:#E3EEF6;--sp-muted:#4A5B6B;
+    font-family:'Poppins',system-ui,sans-serif;color:var(--sp-ink);background:#fff;overflow:hidden}
+  #sp-{{ section.id }} *{box-sizing:border-box}
+  #sp-{{ section.id }} a{color:inherit;text-decoration:none}
+  #sp-{{ section.id }} img{display:block;width:100%;height:100%;object-fit:cover}
+  .sp-wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+  .sp-announce{background:var(--sp-red);color:#fff;font-size:13px;font-weight:500;padding:10px 16px;text-align:center;letter-spacing:.02em}
+  .sp-hero{background:var(--sp-blue)}
+  .sp-hero__in{padding:72px 24px 88px;display:flex;flex-wrap:wrap;gap:48px;align-items:center}
+  .sp-hero__text{flex:1 1 480px;min-width:0;color:#fff}
+  .sp-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--sp-ink);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .sp-pill i{width:8px;height:8px;border-radius:50%;background:var(--sp-red);display:block}
+  .sp-h1{margin:24px 0 0;font-size:clamp(42px,5.6vw,68px);line-height:1.02;font-weight:800;letter-spacing:-.02em;color:#fff}
+  .sp-ml{margin:20px 0 0;font-family:'Baloo Chettan 2',sans-serif;font-size:30px;font-weight:700;color:var(--sp-sun)}
+  .sp-lead{margin:12px 0 0;font-size:18px;line-height:1.6;max-width:520px;color:#F2FAFF}
+  .sp-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .sp-btn{padding:16px 28px;border-radius:999px;font-weight:700;font-size:16px;display:inline-block}
+  .sp-btn--dark{background:var(--sp-ink);color:#fff !important}
+  .sp-btn--light{background:#fff;color:var(--sp-ink) !important}
+  .sp-collage{flex:1 1 520px;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:222px 222px;gap:16px}
+  .sp-tile{border-radius:28px;overflow:hidden;position:relative;background:#fff}
+  .sp-tile--big{grid-row:span 2;background:var(--sp-sun)}
+  .sp-tile--offer{background:var(--sp-red);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
+  .sp-tile--offer small{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .sp-tile--offer b{font-size:34px;font-weight:800;line-height:1.05}
+  .sp-sec{padding:72px 0 24px}
+  .sp-eyebrow{margin:0;color:var(--sp-red);font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase}
+  .sp-h2{margin:8px 0 0;font-size:clamp(30px,3.6vw,44px);font-weight:800;letter-spacing:-.01em}
+  .sp-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+  .sp-link{font-weight:700;color:#0B6FB3 !important}
+  .sp-circles{margin-top:36px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px}
+  .sp-circle{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+  .sp-circle span:first-child{width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:4px solid #fff;display:block;transition:transform .2s}
+  .sp-circle:hover span:first-child{transform:scale(1.04)}
+  .sp-circle b{font-size:18px;font-weight:700}
+  .sp-occ{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+  .sp-occ a{border-radius:28px;padding:32px;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;position:relative;overflow:hidden}
+  .sp-occ small{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;position:relative}
+  .sp-occ b{font-size:30px;font-weight:800;line-height:1.1;position:relative}
+  .sp-occ span{font-size:15px;position:relative}
+  .sp-occ .sp-occ__img{position:absolute;inset:0;opacity:.28}
+  .sp-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .sp-chip{height:44px;padding:0 20px;border-radius:999px;border:1.5px solid #CFE0EC;display:inline-flex;align-items:center;font-weight:600;font-size:15px}
+  .sp-chip--on{background:var(--sp-ink);border-color:var(--sp-ink);color:#fff !important}
+  .sp-grid{margin-top:32px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+  .sp-card{display:flex;flex-direction:column;gap:10px}
+  .sp-card__img{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:var(--sp-cloud);display:block}
+  .sp-card__tag{position:absolute;top:14px;left:14px;background:#fff;color:var(--sp-red);font-size:12px;font-weight:700;border-radius:999px;padding:6px 12px}
+  .sp-card__cat{font-size:12px;font-weight:700;color:#0B6FB3;text-transform:uppercase;letter-spacing:.08em}
+  .sp-card__title{font-size:17px;font-weight:600;line-height:1.35}
+  .sp-card__foot{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .sp-price{font-size:18px;font-weight:800}
+  .sp-price s{font-size:14px;font-weight:500;color:var(--sp-muted);margin-left:6px}
+  .sp-add{height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--sp-blue);color:var(--sp-ink);font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}
+  .sp-twin{background:var(--sp-sun);border-radius:36px;padding:56px;display:flex;flex-wrap:wrap;gap:40px;align-items:center}
+  .sp-twin__text{flex:1 1 420px;min-width:0}
+  .sp-twin__imgs{flex:1 1 420px;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .sp-twin__imgs span{aspect-ratio:3/5;border-radius:22px;overflow:hidden;display:block;background:#fff}
+  .sp-twin__imgs span:nth-child(2){margin-top:40px}
+  .sp-feat{margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  .sp-feat div{border:1.5px solid var(--sp-line);border-radius:24px;padding:28px}
+  .sp-feat i{width:52px;height:52px;border-radius:16px;display:grid;place-items:center}
+  .sp-feat h3{margin:18px 0 6px;font-size:20px;font-weight:700}
+  .sp-feat p{margin:0;font-size:15px;line-height:1.6;color:var(--sp-muted)}
+  .sp-social{background:var(--sp-cloud);padding:72px 0;margin-top:56px}
+  .sp-rev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+  .sp-rev figure{margin:0;background:#fff;border-radius:24px;padding:32px}
+  .sp-stars{color:#E8A400;font-size:20px;letter-spacing:2px}
+  .sp-rev blockquote{margin:14px 0 0;font-size:22px;font-weight:600;line-height:1.4}
+  .sp-rev figcaption{margin-top:14px;font-size:14px;color:var(--sp-muted)}
+  .sp-ig{background:var(--sp-ink);color:#fff;border-radius:24px;padding:32px;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+  .sp-ig b{font-size:26px;font-weight:800;line-height:1.2;word-break:break-word}
+  .sp-strip{margin-top:20px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+  .sp-strip a{aspect-ratio:1;border-radius:18px;overflow:hidden;display:block;background:#CFE6F7}
+  .sp-store{padding:80px 0;display:flex;flex-wrap:wrap;gap:40px;align-items:stretch}
+  .sp-store__text{flex:1 1 420px;min-width:0}
+  .sp-store__info{margin-top:28px;display:flex;flex-direction:column;gap:18px;font-size:16px;line-height:1.6}
+  .sp-store__map{flex:1 1 520px;min-width:0;min-height:380px;border-radius:28px;overflow:hidden;background:var(--sp-line)}
+  .sp-store__map iframe{width:100%;height:100%;min-height:380px;border:0;display:block}
+  @media (max-width:990px){
+    .sp-circles{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .sp-occ,.sp-rev{grid-template-columns:1fr}
+    .sp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sp-feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sp-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .sp-twin{padding:32px}
+  }
+  @media (max-width:600px){
+    .sp-hero__in{padding:48px 16px 56px}
+    .sp-wrap{padding:0 16px}
+    .sp-collage{grid-template-rows:180px 180px}
+    .sp-circles{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .sp-circle b{font-size:15px}
+    .sp-grid{gap:14px}
+    .sp-feat{grid-template-columns:1fr}
+    .sp-add{padding:0 14px}
+  }
+</style>
+
+<div id="sp-{{ section.id }}">
+  {%- if s.announcement != blank -%}<div class="sp-announce">{{ s.announcement }}</div>{%- endif -%}
+
+  <section class="sp-hero">
+    <div class="sp-wrap sp-hero__in">
+      <div class="sp-hero__text">
+        <span class="sp-pill"><i></i>{{ s.hero_eyebrow }}</span>
+        <h1 class="sp-h1">{{ s.hero_heading | newline_to_br }}</h1>
+        {%- if s.hero_malayalam != blank -%}<p class="sp-ml">{{ s.hero_malayalam }}</p>{%- endif -%}
+        <p class="sp-lead">{{ s.hero_text }}</p>
+        <div class="sp-ctas">
+          <a class="sp-btn sp-btn--dark" href="{{ s.hero_link | default: routes.all_products_collection_url }}">{{ s.hero_button }}</a>
+          <a class="sp-btn sp-btn--light" href="#sp-store-{{ section.id }}">Visit our store</a>
+        </div>
+      </div>
+      <div class="sp-collage">
+        <a class="sp-tile sp-tile--big" href="{{ s.hero_link | default: routes.all_products_collection_url }}">
+          {%- if s.hero_image != blank -%}{{ s.hero_image | image_url: width: 900 | image_tag: loading: 'eager', alt: s.hero_eyebrow }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}
+        </a>
+        <a class="sp-tile" href="{{ s.hero_link | default: routes.all_products_collection_url }}">
+          {%- if s.hero_image_2 != blank -%}{{ s.hero_image_2 | image_url: width: 600 | image_tag: loading: 'eager' }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}
+        </a>
+        <a class="sp-tile sp-tile--offer" href="{{ s.offer_link | default: routes.all_products_collection_url }}">
+          <small>{{ s.offer_label }}</small>
+          <b>{{ s.offer_title }}</b>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="sp-wrap">
+    <section class="sp-sec">
+      <div class="sp-head">
+        <div>
+          <p class="sp-eyebrow">Shop for everyone</p>
+          <h2 class="sp-h2">{{ s.circles_heading }}</h2>
+        </div>
+        <a class="sp-link" href="{{ routes.collections_url }}">See all categories →</a>
+      </div>
+      <div class="sp-circles">
+        {%- assign rings = '#4FAAE8,#D7262B,#E8A400,#D7267A,#1B9A4D,#7A4CC9' | split: ',' -%}
+        {%- for i in (1..6) -%}
+          {%- liquid
+            case i
+              when 1
+                assign c_t = s.c1_title
+                assign c_i = s.c1_image
+                assign c_l = s.c1_link
+              when 2
+                assign c_t = s.c2_title
+                assign c_i = s.c2_image
+                assign c_l = s.c2_link
+              when 3
+                assign c_t = s.c3_title
+                assign c_i = s.c3_image
+                assign c_l = s.c3_link
+              when 4
+                assign c_t = s.c4_title
+                assign c_i = s.c4_image
+                assign c_l = s.c4_link
+              when 5
+                assign c_t = s.c5_title
+                assign c_i = s.c5_image
+                assign c_l = s.c5_link
+              when 6
+                assign c_t = s.c6_title
+                assign c_i = s.c6_image
+                assign c_l = s.c6_link
+            endcase
+            assign ri = i | minus: 1
+          -%}
+          <a class="sp-circle" href="{{ c_l | default: routes.all_products_collection_url }}">
+            <span style="box-shadow:0 0 0 2px {{ rings[ri] }}">{%- if c_i != blank -%}{{ c_i | image_url: width: 400 | image_tag: loading: 'lazy', alt: c_t }}{%- else -%}{{ 'apparel-' | append: i | placeholder_svg_tag }}{%- endif -%}</span>
+            <b>{{ c_t }}</b>
+          </a>
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <section class="sp-sec">
+      <div class="sp-occ">
+        <a href="{{ s.o1_link | default: routes.all_products_collection_url }}" style="background:var(--sp-ink);color:#fff">
+          {%- if s.o1_image != blank -%}<span class="sp-occ__img">{{ s.o1_image | image_url: width: 700 | image_tag: loading: 'lazy' }}</span>{%- endif -%}
+          <small style="color:var(--sp-sun)">{{ s.o1_label }}</small><b>{{ s.o1_title }}</b><span style="color:#CFE6F7">{{ s.o1_text }} →</span>
+        </a>
+        <a href="{{ s.o2_link | default: routes.all_products_collection_url }}" style="background:#FCE9E9">
+          {%- if s.o2_image != blank -%}<span class="sp-occ__img">{{ s.o2_image | image_url: width: 700 | image_tag: loading: 'lazy' }}</span>{%- endif -%}
+          <small style="color:#B51D22">{{ s.o2_label }}</small><b>{{ s.o2_title }}</b><span style="color:var(--sp-muted)">{{ s.o2_text }} →</span>
+        </a>
+        <a href="{{ s.o3_link | default: routes.all_products_collection_url }}" style="background:var(--sp-cloud)">
+          {%- if s.o3_image != blank -%}<span class="sp-occ__img">{{ s.o3_image | image_url: width: 700 | image_tag: loading: 'lazy' }}</span>{%- endif -%}
+          <small style="color:#0B6FB3">{{ s.o3_label }}</small><b>{{ s.o3_title }}</b><span style="color:var(--sp-muted)">{{ s.o3_text }} →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="sp-sec">
+      <div class="sp-head">
+        <h2 class="sp-h2" style="margin:0">{{ s.products_heading }}</h2>
+        <div class="sp-chips">
+          <a class="sp-chip sp-chip--on" href="{{ routes.all_products_collection_url }}">All</a>
+          <a class="sp-chip" href="{{ routes.all_products_collection_url }}?filter.p.product_type=Men">Men</a>
+          <a class="sp-chip" href="{{ routes.all_products_collection_url }}?filter.p.product_type=Women">Women</a>
+          <a class="sp-chip" href="{{ routes.all_products_collection_url }}?filter.p.product_type=Girls">Kids</a>
+        </div>
+      </div>
+      <div class="sp-grid">
+        {%- assign col = s.products_collection -%}
+        {%- if col != blank and col.products_count > 0 -%}
+          {%- for product in col.products limit: s.products_limit -%}
+            {%- assign v = product.selected_or_first_available_variant -%}
+            <div class="sp-card">
+              <a class="sp-card__img" href="{{ product.url }}">
+                {%- if product.featured_image -%}{{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
+                {%- if product.compare_at_price > product.price -%}<span class="sp-card__tag">Sale</span>{%- elsif forloop.index <= 3 -%}<span class="sp-card__tag">New</span>{%- endif -%}
+              </a>
+              <span class="sp-card__cat">{{ product.type | default: product.vendor }}</span>
+              <a class="sp-card__title" href="{{ product.url }}">{{ product.title }}</a>
+              <div class="sp-card__foot">
+                <span class="sp-price">{%- if product.price > 0 -%}{{ product.price | money_without_trailing_zeros }}{%- else -%}Price on request{%- endif -%}{%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}</span>
+                {%- if product.available and product.price > 0 -%}
+                  <form action="{{ routes.cart_add_url }}" method="post">
+                    <input type="hidden" name="id" value="{{ v.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button class="sp-add" type="submit">Add</button>
+                  </form>
+                {%- else -%}
+                  <a class="sp-add" href="{{ product.url }}" style="display:inline-flex;align-items:center">View</a>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <div class="sp-card"><span class="sp-card__img">{{ 'product-' | append: i | placeholder_svg_tag }}</span><span class="sp-card__title">Add products to the selected collection</span></div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </section>
+
+    <section class="sp-sec">
+      <div class="sp-twin">
+        <div class="sp-twin__text">
+          <p class="sp-eyebrow" style="color:#B51D22">{{ s.twin_label }}</p>
+          <h2 class="sp-h2" style="font-size:clamp(34px,4.4vw,52px);line-height:1.05">{{ s.twin_heading }}</h2>
+          <p style="margin:16px 0 0;font-size:18px;line-height:1.6;color:#2E3E4D">{{ s.twin_text }}</p>
+          <a class="sp-btn sp-btn--dark" style="margin-top:28px" href="{{ s.twin_link | default: routes.all_products_collection_url }}">{{ s.twin_button }}</a>
+        </div>
+        <div class="sp-twin__imgs">
+          <span>{%- if s.twin1 != blank -%}{{ s.twin1 | image_url: width: 500 | image_tag: loading: 'lazy' }}{%- endif -%}</span>
+          <span style="background:var(--sp-blue)">{%- if s.twin2 != blank -%}{{ s.twin2 | image_url: width: 500 | image_tag: loading: 'lazy' }}{%- endif -%}</span>
+          <span>{%- if s.twin3 != blank -%}{{ s.twin3 | image_url: width: 500 | image_tag: loading: 'lazy' }}{%- endif -%}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sp-sec">
+      <h2 class="sp-h2" style="text-align:center">Why families choose Yathra</h2>
+      <div class="sp-feat">
+        <div><i style="background:var(--sp-cloud)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B6FB3" stroke-width="2" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c.8-3.5 3.2-5.5 6-5.5s5.2 2 6 5.5"/><path d="M14.5 15c.8-.6 1.6-.9 2.5-.9 2.2 0 3.8 1.6 4.5 4.4"/></svg></i><h3>Everyone, one roof</h3><p>Men, women, kids and babies — the whole family's shopping in one stop.</p></div>
+        <div><i style="background:#FCE9E9"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B51D22" stroke-width="2" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></i><h3>Trendy + traditional</h3><p>Latest styles alongside Kerala classics like kasavu and churidhar sets.</p></div>
+        <div><i style="background:#FFF6D6"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A6400" stroke-width="2" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></i><h3>Delivered across Kerala</h3><p>Order online, or pick up from our Vaduthala store.</p></div>
+        <div><i style="background:#E6F6EC"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1B7A3D" stroke-width="2" aria-hidden="true"><path d="M4 20l1.3-3.8A8 8 0 1 1 8 19z"/></svg></i><h3>Order on WhatsApp</h3><p><a href="https://wa.me/{{ s.whatsapp }}" style="color:#1B7A3D;font-weight:600">Message us</a> a screenshot and we'll confirm size and stock.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="sp-social">
+    <div class="sp-wrap">
+      <div class="sp-rev">
+        <figure><div class="sp-stars" aria-label="5 stars">★★★★★</div><blockquote>“{{ s.review1 }}”</blockquote><figcaption>Google review</figcaption></figure>
+        <figure><div class="sp-stars" aria-label="5 stars">★★★★★</div><blockquote>“{{ s.review2 }}”</blockquote><figcaption>Google review</figcaption></figure>
+        <div class="sp-ig"><span style="color:#CFE6F7">Follow the journey</span><b>@{{ s.instagram_handle }}</b><a href="{{ s.instagram_url }}" style="color:var(--sp-sun);font-weight:700">Open Instagram →</a></div>
+      </div>
+      <div class="sp-strip">
+        {%- for k in (1..6) -%}
+          {%- liquid
+            case k
+              when 1
+                assign im = s.ig1
+              when 2
+                assign im = s.ig2
+              when 3
+                assign im = s.ig3
+              when 4
+                assign im = s.ig4
+              when 5
+                assign im = s.ig5
+              when 6
+                assign im = s.ig6
+            endcase
+          -%}
+          <a href="{{ s.instagram_url }}" aria-label="Instagram post {{ k }}">{%- if im != blank -%}{{ im | image_url: width: 400 | image_tag: loading: 'lazy' }}{%- endif -%}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <div class="sp-wrap">
+    <section class="sp-store" id="sp-store-{{ section.id }}">
+      <div class="sp-store__text">
+        <p class="sp-eyebrow">Visit the store</p>
+        <h2 class="sp-h2">{{ s.store_heading }}</h2>
+        <div class="sp-store__info">
+          <div><strong>Address</strong><br>{{ s.store_address | newline_to_br }}</div>
+          <div><strong>Hours</strong><br>{{ s.store_hours }}</div>
+          <div><strong>Call / WhatsApp</strong><br>{{ s.phones }}</div>
+        </div>
+        <a class="sp-btn" style="margin-top:28px;background:var(--sp-blue);color:var(--sp-ink)" href="https://maps.google.com/?q={{ s.map_query | url_encode }}" target="_blank" rel="noopener">Get directions</a>
+      </div>
+      <div class="sp-store__map">
+        <iframe title="Map to Yathra store" loading="lazy" src="https://maps.google.com/maps?q={{ s.map_query | url_encode }}&output=embed"></iframe>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Yathra Sky Blue Pop",
+  "tag": "section",
+  "class": "yathra-skypop",
+  "settings": [
+    { "type": "color", "id": "blue", "label": "Brand blue", "default": "#4FAAE8" },
+    { "type": "text", "id": "announcement", "label": "Announcement bar", "default": "The complete family clothing store · Cash on delivery across Kerala · WhatsApp 79072 25945" },
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Label", "default": "The Complete Family Clothing Store" },
+    { "type": "textarea", "id": "hero_heading", "label": "Heading", "default": "One trip.\nThe whole family,\ndressed in style." },
+    { "type": "text", "id": "hero_malayalam", "label": "Malayalam tagline", "default": "നമ്മുടെ സ്വന്തം തുണിക്കട" },
+    { "type": "textarea", "id": "hero_text", "label": "Text", "default": "From mom's festive salwar sets to dad's smart shirts and the kids' party frocks — trendy picks for every member, every occasion." },
+    { "type": "text", "id": "hero_button", "label": "Button label", "default": "Shop the Family Edit" },
+    { "type": "url", "id": "hero_link", "label": "Button link" },
+    { "type": "image_picker", "id": "hero_image", "label": "Large image" },
+    { "type": "image_picker", "id": "hero_image_2", "label": "Small image" },
+    { "type": "text", "id": "offer_label", "label": "Red tile label", "default": "Festive drop" },
+    { "type": "text", "id": "offer_title", "label": "Red tile title", "default": "New arrivals are in" },
+    { "type": "url", "id": "offer_link", "label": "Red tile link" },
+    { "type": "header", "content": "Shop for everyone (circles)" },
+    { "type": "text", "id": "circles_heading", "label": "Heading", "default": "Who are we dressing today?" },
+    { "type": "text", "id": "c1_title", "label": "Circle 1 title", "default": "Men" },
+    { "type": "image_picker", "id": "c1_image", "label": "Circle 1 image" },
+    { "type": "url", "id": "c1_link", "label": "Circle 1 link" },
+    { "type": "text", "id": "c2_title", "label": "Circle 2 title", "default": "Women" },
+    { "type": "image_picker", "id": "c2_image", "label": "Circle 2 image" },
+    { "type": "url", "id": "c2_link", "label": "Circle 2 link" },
+    { "type": "text", "id": "c3_title", "label": "Circle 3 title", "default": "Girls" },
+    { "type": "image_picker", "id": "c3_image", "label": "Circle 3 image" },
+    { "type": "url", "id": "c3_link", "label": "Circle 3 link" },
+    { "type": "text", "id": "c4_title", "label": "Circle 4 title", "default": "Kids" },
+    { "type": "image_picker", "id": "c4_image", "label": "Circle 4 image" },
+    { "type": "url", "id": "c4_link", "label": "Circle 4 link" },
+    { "type": "text", "id": "c5_title", "label": "Circle 5 title", "default": "Ethnic" },
+    { "type": "image_picker", "id": "c5_image", "label": "Circle 5 image" },
+    { "type": "url", "id": "c5_link", "label": "Circle 5 link" },
+    { "type": "text", "id": "c6_title", "label": "Circle 6 title", "default": "Festive" },
+    { "type": "image_picker", "id": "c6_image", "label": "Circle 6 image" },
+    { "type": "url", "id": "c6_link", "label": "Circle 6 link" },
+    { "type": "header", "content": "Occasion cards" },
+    { "type": "text", "id": "o1_label", "label": "Card 1 label", "default": "Onam · Vishu · Christmas" },
+    { "type": "text", "id": "o1_title", "label": "Card 1 title", "default": "Festival wear for the whole family" },
+    { "type": "text", "id": "o1_text", "label": "Card 1 text", "default": "Kurta sets, salwars & party frocks" },
+    { "type": "image_picker", "id": "o1_image", "label": "Card 1 background image" },
+    { "type": "url", "id": "o1_link", "label": "Card 1 link" },
+    { "type": "text", "id": "o2_label", "label": "Card 2 label", "default": "Wedding season" },
+    { "type": "text", "id": "o2_title", "label": "Card 2 title", "default": "Look your best at every function" },
+    { "type": "text", "id": "o2_text", "label": "Card 2 text", "default": "Embroidered sets & three-piece suits" },
+    { "type": "image_picker", "id": "o2_image", "label": "Card 2 background image" },
+    { "type": "url", "id": "o2_link", "label": "Card 2 link" },
+    { "type": "text", "id": "o3_label", "label": "Card 3 label", "default": "Everyday comfort" },
+    { "type": "text", "id": "o3_title", "label": "Card 3 title", "default": "Casuals for work, school & home" },
+    { "type": "text", "id": "o3_text", "label": "Card 3 text", "default": "Easy cottons for Kerala weather" },
+    { "type": "image_picker", "id": "o3_image", "label": "Card 3 background image" },
+    { "type": "url", "id": "o3_link", "label": "Card 3 link" },
+    { "type": "header", "content": "Products" },
+    { "type": "text", "id": "products_heading", "label": "Heading", "default": "Fresh in store" },
+    { "type": "collection", "id": "products_collection", "label": "Collection" },
+    { "type": "range", "id": "products_limit", "label": "Products to show", "min": 4, "max": 16, "step": 1, "default": 8 },
+    { "type": "header", "content": "Twinning banner" },
+    { "type": "text", "id": "twin_label", "label": "Label", "default": "Trending now" },
+    { "type": "text", "id": "twin_heading", "label": "Heading", "default": "Twin with your family." },
+    { "type": "textarea", "id": "twin_text", "label": "Text", "default": "Coordinated colours for parents, kids and little ones. Perfect for festival photos and family functions." },
+    { "type": "text", "id": "twin_button", "label": "Button label", "default": "Shop matching looks" },
+    { "type": "url", "id": "twin_link", "label": "Button link" },
+    { "type": "image_picker", "id": "twin1", "label": "Image 1" },
+    { "type": "image_picker", "id": "twin2", "label": "Image 2" },
+    { "type": "image_picker", "id": "twin3", "label": "Image 3" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number (with country code, digits only)", "default": "917907225945" },
+    { "type": "header", "content": "Reviews & Instagram" },
+    { "type": "text", "id": "review1", "label": "Review 1", "default": "Good varieties of collections and value of money." },
+    { "type": "text", "id": "review2", "label": "Review 2", "default": "Good shop. Good selection." },
+    { "type": "text", "id": "instagram_handle", "label": "Instagram handle", "default": "yathra_trendy_collections" },
+    { "type": "text", "id": "instagram_url", "label": "Instagram link", "default": "https://www.instagram.com/yathra_trendy_collections/" },
+    { "type": "image_picker", "id": "ig1", "label": "Instagram photo 1" },
+    { "type": "image_picker", "id": "ig2", "label": "Instagram photo 2" },
+    { "type": "image_picker", "id": "ig3", "label": "Instagram photo 3" },
+    { "type": "image_picker", "id": "ig4", "label": "Instagram photo 4" },
+    { "type": "image_picker", "id": "ig5", "label": "Instagram photo 5" },
+    { "type": "image_picker", "id": "ig6", "label": "Instagram photo 6" },
+    { "type": "header", "content": "Store" },
+    { "type": "text", "id": "store_heading", "label": "Heading", "default": "Come say hello in Arookutty" },
+    { "type": "textarea", "id": "store_address", "label": "Address", "default": "Galleria Shopping Complex, Vaduthala Junction,\nCherthala – Arookutty Rd, Arookutty, Kerala 688535" },
+    { "type": "text", "id": "store_hours", "label": "Hours", "default": "Open daily till 9:30 PM" },
+    { "type": "text", "id": "phones", "label": "Phone numbers", "default": "94969 67128 · 79072 25945" },
+    { "type": "text", "id": "map_query", "label": "Map search text", "default": "Yathra Trendy Collections, Galleria Shopping Complex, Vaduthala, Arookutty" }
+  ],
+  "presets": [{ "name": "Yathra Sky Blue Pop" }]
+}
+{% endschema %}
